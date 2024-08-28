@@ -6,9 +6,9 @@ public enum Coin {
     DIME(10),
     QUARTER(25);
 
-    private int val;
+    private final int val;
 
-    private Coin(int val) {
+    Coin(int val) {
         this.val = val;
     }
 

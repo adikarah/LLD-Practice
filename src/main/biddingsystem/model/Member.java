@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Member {
 
-    private UUID memberId;
+    private final UUID memberId;
 
     private String name;
 
