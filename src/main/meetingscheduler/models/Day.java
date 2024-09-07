@@ -1,4 +1,4 @@
-package main.meetingscheduler;
+package main.meetingscheduler.models;
 
 public enum Day {
     MONDAY,

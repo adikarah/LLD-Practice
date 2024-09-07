@@ -21,7 +21,7 @@ public class BiddingSystemApplication {
         Member u1 = userService.createMember("Vaibhav", 1000);
         Member u2 = userService.createMember("Shyam", 1000);
         Member u3 = userService.createMember("Ram", 5000);
-        Event e = eventsService.createEvent("Bidding Carnival", LocalDate.of(2024, 7, 6), "Iphone");
+        Event e = eventsService.createEvent("Bidding Carnival", LocalDate.now(), "Iphone");
 
         eventsService.addParticipant(u1, e.getEventId());
         eventsService.addParticipant(u2, e.getEventId());

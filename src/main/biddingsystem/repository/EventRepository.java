@@ -76,7 +76,8 @@ public class EventRepository {
         e.setActive(false);
         biddingDatabase.remove(eventId);
         biddingSubmitted.remove(eventId);
-        System.out.println("Winner is being loaded, contest" + e.getEventName() + " ended with id : " + e.getEventId() + " ");
+        System.out.println("Winner is being loaded, contest" + e.getEventName()
+                + " ended with id : " + e.getEventId() + " ");
         return winner;
     }
 
@@ -98,7 +99,7 @@ public class EventRepository {
             // user not participated
             throw new UserNotRegisteredException("User is not registered in event");
         }
-        // check biddings
+        // check bidings
         HashMap<UUID, HashSet<Bid>> userBids = biddingDatabase.get(eventId);
         if (userBids != null && userBids.get(b.getMember().getMemberId()).size() >= BID_LIMIT) {
             throw new InvalidInputException("No of bids exceeded ");
@@ -128,7 +129,9 @@ public class EventRepository {
                 sorted().
                 limit(5L)
                 .forEach(event -> {
-                    System.out.println("Event of date : " + event.getEventDate() + " won by: " + event.getWinningBid().getMember().getName() + " with a bid of : " + event.getWinningBid().getAmount());
+                    System.out.println("Event of date : " + event.getEventDate()
+                            + " won by: " + event.getWinningBid().getMember().getName()
+                            + " with a bid of : " + event.getWinningBid().getAmount());
                 });
 
     }
