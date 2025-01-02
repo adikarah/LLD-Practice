@@ -1,0 +1,8 @@
+package main.parkinglot.models.enums;
+
+public enum VehicleType {
+    BIKE,
+    CAR,
+    TRUCK
+}
+
