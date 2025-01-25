@@ -3,9 +3,7 @@ package main.parkinglot.dao;
 import main.parkinglot.models.VehicleParkingDetails;
 import main.parkinglot.models.enums.Vehicle;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
 import java.util.HashMap;
 
 public class VehicleDao {
