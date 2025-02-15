@@ -9,3 +9,4 @@ This repo contains some popular design questions
 7. Meeting Scheduler
 8. Snake And Ladder
 9. Vending Machine
+10. Parking Lot
