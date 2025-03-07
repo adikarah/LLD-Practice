@@ -34,13 +34,8 @@ public class SlidingWindow implements RateLimiter {
     }
 
     private void checkAndUpdateWindowQueue(long currentTime) {
-        if (this.windowQueue.isEmpty()) {
-            return;
-        }
-
-        var calculatedTime = (currentTime - this.windowQueue.peek().timeStamp()) / 1000;
-        while (!this.windowQueue.isEmpty() && calculatedTime >= timeWindowInSeconds) {
-
+        while (!this.windowQueue.isEmpty() &&
+                (currentTime - this.windowQueue.peek().timeStamp()) / 1000 >= timeWindowInSeconds) {
             this.windowQueue.poll();
         }
     }

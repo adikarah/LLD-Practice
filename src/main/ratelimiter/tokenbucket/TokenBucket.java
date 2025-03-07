@@ -8,20 +8,16 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class TokenBucket implements RateLimiter {
 
-    private int bucketCapacity;
-
-    private int refreshRate;
-
-    private AtomicInteger currentCapacity;
-
-    private AtomicLong lastUpdatedTime;
+    private final int bucketCapacity;
+    private final int refreshRate; // Tokens added per second
+    private final AtomicInteger currentCapacity;
+    private final AtomicLong lastUpdatedTime;
 
     public TokenBucket(int bucketCapacity, int refreshRate) {
         this.bucketCapacity = bucketCapacity;
         this.refreshRate = refreshRate;
-        this.currentCapacity.set(bucketCapacity);
-        this.lastUpdatedTime.set(System.currentTimeMillis());
-
+        this.currentCapacity = new AtomicInteger(bucketCapacity); // Proper initialization
+        this.lastUpdatedTime = new AtomicLong(System.currentTimeMillis());
     }
 
     @Override
@@ -34,11 +30,15 @@ public class TokenBucket implements RateLimiter {
         return false;
     }
 
-    public void refreshBucket() {
+    private void refreshBucket() {
         long currentTime = System.currentTimeMillis();
-        int additionalToken = (int) ((currentTime - lastUpdatedTime.get()) / 1000 * refreshRate);
-        int currentCapacity = Math.min(this.currentCapacity.get() + additionalToken, bucketCapacity);
-        this.currentCapacity.set(currentCapacity);
-        this.lastUpdatedTime.set(currentTime);
+        long elapsedTimeInSeconds = (currentTime - lastUpdatedTime.get()) / 1000;
+
+        if (elapsedTimeInSeconds > 0) { // Only update if at least a second has passed
+            int additionalTokens = (int) (elapsedTimeInSeconds * refreshRate);
+            int updatedCapacity = Math.min(currentCapacity.get() + additionalTokens, bucketCapacity);
+            currentCapacity.set(updatedCapacity);
+            lastUpdatedTime.set(currentTime);
+        }
     }
 }
