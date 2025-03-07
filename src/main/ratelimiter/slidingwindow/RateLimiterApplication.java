@@ -7,11 +7,11 @@ import java.util.concurrent.Executors;
 public class RateLimiterApplication {
 
     public static void main(String[] args) {
-        UserBucketCreator userBucketCreator = new UserBucketCreator(10, 1);
+        UserBucketCreator userBucketCreator = new UserBucketCreator(5, 1);
 
-        ExecutorService executorService = Executors.newFixedThreadPool(12);
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 10; i++) {
             UUID requestId = UUID.randomUUID();
             executorService.execute(() -> userBucketCreator.accessApplication(requestId));
         }

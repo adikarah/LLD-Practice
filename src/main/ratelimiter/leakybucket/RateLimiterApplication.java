@@ -7,16 +7,24 @@ import java.util.concurrent.Executors;
 public class RateLimiterApplication {
 
     public static void main(String[] args) {
-        UserBucketCreator userBucketCreator = new UserBucketCreator();
+        int bucketCapacity = 5;   // Max 5 requests can be held at a time
+        int leakRate = 1000;      // Leak 1 request per second
 
-        ExecutorService executorService = Executors.newFixedThreadPool(12);
+        UserBucketCreator userBucketCreator = new UserBucketCreator(bucketCapacity, leakRate);
 
-        for (int i = 0; i < 12; i++) {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+        for (int i = 0; i < 10; i++) {
             UUID requestId = UUID.randomUUID();
             executorService.execute(() -> userBucketCreator.accessApplication(requestId));
+
+            try {
+                Thread.sleep(200);  // Simulating request intervals
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         executorService.shutdown();
-
     }
 }
